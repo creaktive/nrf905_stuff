@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS=-Wall -I../bcm2835-1.36/src
-LDFLAGS=../bcm2835-1.36/src/libbcm2835.a
+CFLAGS=-Wall -I../bcm2835-1.38/src
+LDFLAGS=../bcm2835-1.38/src/libbcm2835.a
 
 all: libnrf905.so nrf905_recv nrf905_send nrf905_status
 
