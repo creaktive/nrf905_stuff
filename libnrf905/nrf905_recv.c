@@ -47,7 +47,7 @@ int main(int argc, const char *argv[])
 {
 	nrf905_t nrf;
 	int err;
-	uint32_t addr = 0x11223344;
+	uint32_t addr = 0x0c9a93;
 	uint8_t buf[32];
 	int i;
 
@@ -61,12 +61,19 @@ int main(int argc, const char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	err = nrf905_set_rx_afw(&nrf, 3);
+	if (err != 0) {
+		fprintf(stderr, "Failed to set address length\n");
+		exit(EXIT_FAILURE);
+	}
+
 	err = nrf905_set_xof(&nrf, NRF905_XOF_16MHZ);
 	if (err != 0) {
 		fprintf(stderr, "Failed to set crystal frequency\n");
 		exit(EXIT_FAILURE);
 	}
 
+	//err = nrf905_set_freq(&nrf, 433200000);
 	err = nrf905_set_freq(&nrf, 868400000);
 	if (err != 0) {
 		fprintf(stderr, "Failed to set carrier frequency\n");
@@ -79,7 +86,7 @@ int main(int argc, const char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	err = nrf905_set_rx_pw(&nrf, 16);
+	err = nrf905_set_rx_pw(&nrf, 24);
 	if (err != 0) {
 		fprintf(stderr, "Failed to set payload width\n");
 		exit(EXIT_FAILURE);
@@ -96,8 +103,8 @@ int main(int argc, const char *argv[])
 		nrf905_recv(&nrf, buf, sizeof(buf));
 		nrf905_recv_disable(&nrf);
 
-		for (i=0; i<16; i++) {
-			printf("%.2x ", buf[i]);
+		for (i=0; i<24; i++) {
+			printf("%02x", buf[i]);
 		}
 		putchar('\n');
 	}
