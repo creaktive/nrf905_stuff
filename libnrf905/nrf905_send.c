@@ -85,7 +85,7 @@ int main(int argc, const char *argv[])
 {
 	nrf905_t nrf;
 	int err;
-	uint32_t addr = 0x0c9a93;
+	uint32_t addr = 0x31fab6;
 	int hex_str_len;
 	int len;
 	uint8_t buf[32];
@@ -146,8 +146,9 @@ int main(int argc, const char *argv[])
 	}
 
 	//err = nrf905_set_freq(&nrf, 433200000);
-	//err = nrf905_set_freq(&nrf, 868200000+((getpid()%2)?200000:0));
-	err = nrf905_set_freq(&nrf, 868400000);
+	srand(getpid());
+	err = nrf905_set_freq(&nrf, 868200000+((rand()%2)?200000:0));
+	//err = nrf905_set_freq(&nrf, 868400000);
 	if (err != 0) {
 		fprintf(stderr, "Failed to set carrier frequency\n");
 		exit(EXIT_FAILURE);

@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "nrf905.h"
 #include "bcm2835.h"
@@ -47,9 +48,10 @@ int main(int argc, const char *argv[])
 {
 	nrf905_t nrf;
 	int err;
-	uint32_t addr = 0x0c9a93;
+	uint32_t addr = 0x31fab6;
 	uint8_t buf[32];
 	int i;
+	struct timeval tv;
 
 	if (argc == 2) {
 		addr = strtoll(argv[1], NULL, 16);
@@ -106,7 +108,9 @@ int main(int argc, const char *argv[])
 		for (i=0; i<24; i++) {
 			printf("%02x", buf[i]);
 		}
-		putchar('\n');
+
+		gettimeofday(&tv, NULL);
+		printf("\t%f\n", tv.tv_sec + tv.tv_usec / 1e6);
 	}
 
 	nrf905_destroy(&nrf);
